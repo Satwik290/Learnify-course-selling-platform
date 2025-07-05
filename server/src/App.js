@@ -9,6 +9,9 @@ const profileRoutes = require("./routes/profile.routes");
 const courseRoutes = require("./routes/course.routes");
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 
 // 🌐 Middlewares
 app.use(cors({ origin: "http://localhost:3000", credentials: true })); // Use your frontend URL here
@@ -16,7 +19,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // 📦 Static folder for uploaded files
-app.use("/uploads", express.static("src/uploads"));
+const path = require("path");
+app.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
 
 // 🔗 Connect to database
 connectDB();
