@@ -9,6 +9,7 @@ const profileRoutes = require("./routes/profile.routes");
 const courseRoutes = require("./routes/course.routes");
 const enrollmentRoutes = require("./routes/enroll.routes");
 const adminRoutes = require("./routes/admin.routes");
+const paymentRoutes = require("./routes/payment.routes");
 
 
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/enroll", enrollmentRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/payment", paymentRoutes);
 
 
 // 🔍 Test route
