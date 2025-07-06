@@ -15,3 +15,21 @@ exports.updateProfile = async (req, res) => {
 
   res.json({ user: updated });
 };
+
+exports.getEnrolledCourses = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await User.findById(userId)
+      .populate("enrolledCourses", "title thumbnail price") // Limit exposed fields
+      .select("firstName lastName enrolledCourses");
+
+    res.status(200).json({
+      message: "Fetched enrolled courses",
+      enrolledCourses: user.enrolledCourses,
+    });
+  } catch (error) {
+    console.error("Error fetching enrolled courses:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

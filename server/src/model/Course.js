@@ -24,7 +24,7 @@ const courseSchema = new mongoose.Schema(
     },
     thumbnail: {
       type: String,
-      // required: true,
+      required: true,
     },
     creator: {
       type: mongoose.Schema.Types.ObjectId,

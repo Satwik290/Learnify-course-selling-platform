@@ -35,8 +35,8 @@ exports.createCourse = async (req, res) => {
 exports.getAllCourses = async (req, res) => {
   try {
     const courses = await Course.find()
-      .populate("creator", "firstName emailId")
-      .sort({ createdAt: -1 }); // optional: latest first
+      .populate("creator", "firstName email")
+      .sort({ createdAt: -1 }); 
 
     res.status(200).json({ courses });
   } catch (error) {
@@ -46,7 +46,7 @@ exports.getAllCourses = async (req, res) => {
 
 exports.getCourseById = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id).populate("creator", "firstName emailId");
+    const course = await Course.findById(req.params.id).populate("creator", "firstName email");
 
     if (!course) return res.status(404).json({ error: "Course not found" });
 
