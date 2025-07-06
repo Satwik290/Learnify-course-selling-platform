@@ -9,33 +9,41 @@ const {
   updateCourse,
   deleteCourse,
 } = require("../controllers/course.controllers");
+
 const { upload } = require("../middlewares/upload.middlewares");
 const { verifyToken } = require("../middlewares/auth.middlewares");
+const { restrictTo } = require("../middlewares/role.middleware"); // ✅ RBAC middleware
 
-// 👇 Define route to create a course
+// 👇 Create a new course (instructor or admin only)
 router.post(
   "/",
-  verifyToken,               // 🛡️ 1. Authentication middleware
-  upload.single("thumbnail"), // 📷 2. Multer middleware to handle image
-  createCourse                // 💡 3. Controller to handle logic
+  verifyToken,
+  restrictTo("instructor", "admin"),     // ✅ Role check
+  upload.single("thumbnail"),
+  createCourse
 );
 
-// GET all courses
+// ✅ Get all courses (public)
 router.get("/", getAllCourses);
 
-// GET one course
+// ✅ Get single course by ID (public)
 router.get("/:id", getCourseById);
 
-// Update course (only creator)
+// 👇 Update course (only instructor/admin)
 router.put(
   "/:id",
   verifyToken,
+  restrictTo("instructor", "admin"),     // ✅ Role check
   upload.single("thumbnail"),
   updateCourse
 );
 
-// DELETE course (only creator)
-router.delete("/:id", verifyToken, deleteCourse);
-
+// 👇 Delete course (only instructor/admin)
+router.delete(
+  "/:id",
+  verifyToken,
+  restrictTo("instructor", "admin"),     // ✅ Role check
+  deleteCourse
+);
 
 module.exports = router;
