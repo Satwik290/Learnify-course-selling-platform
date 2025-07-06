@@ -30,7 +30,15 @@ const userSchema = new mongoose.Schema({
   },
   about: { type: String, default: "No bio provided" },
   skills: [String],
-  role: { type: String, enum: ["admin", "student"], default: "student" },
+  role: {
+    type: String,
+    enum: ["admin", "student", "instructor"],
+    default: "student",
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
 }, { timestamps: true });
 
 userSchema.pre("save", async function (next) {
@@ -47,6 +55,12 @@ userSchema.methods.generateJWT = function () {
   return jwt.sign({ _id: this._id, role: this.role }, process.env.JWT_SECRET, {
     expiresIn: "8h",
   });
+};
+
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
 };
 
 module.exports = mongoose.model("User", userSchema);
