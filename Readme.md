@@ -40,6 +40,7 @@ learnify-server/
 
 ---
 
+
 ## 🔐 Features Implemented (🚀 Part 1 Complete!)
 
 ### 🔑 Auth System
