@@ -73,7 +73,7 @@ learnify-server/
 
 ## 🎨 Sample Diagram
 
-![Learnify Backend Architecture](./assets/learnify-backend-arch.svg)
+![Learnify Backend Architecture](./server/src/Assets/learnify-server.svg)
 
 ---
 
