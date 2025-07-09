@@ -1,721 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Learnify</title>
-    <style>
-        /* CSS Variables & Reset */
-        :root {
-            --primary: #4F46E5;
-            --primary-dark: #3730A3;
-            --secondary: #10B981;
-            --accent: #F59E0B;
-            --neutral: #6B7280;
-            --bg-light: #F9FAFB;
-            --bg-white: #FFFFFF;
-            --text-dark: #1F2937;
-            --text-light: #6B7280;
-            --border: #E5E7EB;
-            --danger: #EF4444;
-            --success: #10B981;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --border-radius: 8px;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .auth-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            width: 100%;
-            max-width: 800px; /* Increased from 450px to 800px */
-        }
-
-        .auth-header {
-            background: var(--bg-light);
-            padding: 2rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 0.5rem;
-        }
-
-        .auth-title {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .auth-subtitle {
-            color: var(--text-light);
-            font-size: 0.9rem;
-        }
-
-        .auth-form {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--border);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-            background: white;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
-
-        .form-input.error {
-            border-color: var(--danger);
-        }
-
-        .form-input.success {
-            border-color: var(--success);
-        }
-
-        .form-error {
-            color: var(--danger);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-
-        .form-error.show {
-            display: block;
-        }
-
-        .form-success {
-            color: var(--success);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-
-        .form-success.show {
-            display: block;
-        }
-
-        .password-strength {
-            margin-top: 0.5rem;
-        }
-
-        .strength-bar {
-            height: 4px;
-            background: var(--border);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-
-        .strength-fill {
-            height: 100%;
-            transition: var(--transition);
-            width: 0%;
-        }
-
-        .strength-weak { background: var(--danger); }
-        .strength-medium { background: var(--accent); }
-        .strength-strong { background: var(--success); }
-
-        .strength-text {
-            font-size: 0.875rem;
-            color: var(--text-light);
-        }
-
-        .role-selector {
-            display: flex;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .role-option {
-            flex: 1;
-            position: relative;
-        }
-
-        .role-input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .role-label {
-            display: block;
-            padding: 1rem;
-            border: 2px solid var(--border);
-            border-radius: var(--border-radius);
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            background: white;
-        }
-
-        .role-input:checked + .role-label {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: white;
-        }
-
-        .role-label:hover {
-            border-color: var(--primary);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-
-        .checkbox-input {
-            margin-top: 0.25rem;
-        }
-
-        .checkbox-label {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            line-height: 1.4;
-        }
-
-        .checkbox-label a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        .checkbox-label a:hover {
-            text-decoration: underline;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 0.875rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 1rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        .btn-primary:disabled {
-            background: var(--neutral);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-loading {
-            position: relative;
-            color: transparent;
-        }
-
-        .btn-loading::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            top: 50%;
-            left: 50%;
-            margin-left: -10px;
-            margin-top: -10px;
-            border: 2px solid transparent;
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .auth-footer {
-            text-align: center;
-            padding: 1rem 2rem 2rem;
-            color: var(--text-light);
-        }
-
-        .auth-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .back-to-home {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-        }
-
-        .back-to-home:hover {
-            opacity: 0.8;
-        }
-
-        .alert {
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        .alert.show {
-            display: block;
-        }
-
-        .alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .auth-form {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .auth-container {
-                margin: 0;
-                border-radius: 0;
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            .auth-header, .auth-form, .auth-footer {
-                padding: 1.5rem;
-            }
-
-            .role-selector {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up | Learnify</title>
+  <link rel="stylesheet" href="../styles/auth.css" />
 </head>
 <body>
-    <a href="../index.html" class="back-to-home">← Back to Home</a>
-    
-    <div class="auth-container">
-        <div class="auth-header">
-            <a href="../index.html" class="logo">Learnify</a>
-            <h1 class="auth-title">Create Account</h1>
-            <p class="auth-subtitle">Join thousands of learners worldwide</p>
-        </div>
+  <a href="../index.html" class="back-to-home">← Back to Home</a>
 
-        <form class="auth-form" id="signupForm">
-            <div class="form-group full-width">
-                <div class="alert alert-error" id="errorAlert"></div>
-                <div class="alert alert-success" id="successAlert"></div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="fullName">Full Name</label>
-                <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Enter your full name" required>
-                <div class="form-error" id="fullNameError"></div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="email">Email Address</label>
-                <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
-                <div class="form-error" id="emailError"></div>
-                <div class="form-success" id="emailSuccess"></div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="password">Password</label>
-                <input type="password" id="password" name="password" class="form-input" placeholder="Create a strong password" required>
-                <div class="password-strength">
-                    <div class="strength-bar">
-                        <div class="strength-fill" id="strengthFill"></div>
-                    </div>
-                    <div class="strength-text" id="strengthText">Password strength will appear here</div>
-                </div>
-                <div class="form-error" id="passwordError"></div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label" for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirm your password" required>
-                <div class="form-error" id="confirmPasswordError"></div>
-                <div class="form-success" id="confirmPasswordSuccess"></div>
-            </div>
-
-            <div class="form-group full-width">
-                <label class="form-label">I am a:</label>
-                <div class="role-selector">
-                    <div class="role-option">
-                        <input type="radio" id="student" name="role" value="student" class="role-input" checked>
-                        <label for="student" class="role-label">Student</label>
-                    </div>
-                    <div class="role-option">
-                        <input type="radio" id="instructor" name="role" value="instructor" class="role-input">
-                        <label for="instructor" class="role-label">Instructor</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group full-width">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terms" name="terms" class="checkbox-input" required>
-                    <label for="terms" class="checkbox-label">
-                        I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
-                    </label>
-                </div>
-                <div class="form-error" id="termsError"></div>
-            </div>
-
-            <div class="form-group full-width">
-                <button type="submit" class="btn btn-primary" id="submitBtn">Create Account</button>
-            </div>
-        </form>
-
-        <div class="auth-footer">
-            <p>Already have an account? <a href="login.html">Sign in here</a></p>
-        </div>
+  <div class="auth-container">
+    <div class="auth-header">
+      <a href="../index.html" class="logo">Learnify</a>
+      <h1 class="auth-title">Create Account</h1>
+      <p class="auth-subtitle">Join thousands of learners worldwide</p>
     </div>
 
-    <script>
-        class SignupForm {
-            constructor() {
-                this.form = document.getElementById('signupForm');
-                this.inputs = {
-                    fullName: document.getElementById('fullName'),
-                    email: document.getElementById('email'),
-                    password: document.getElementById('password'),
-                    confirmPassword: document.getElementById('confirmPassword'),
-                    terms: document.getElementById('terms')
-                };
-                this.errors = {
-                    fullName: document.getElementById('fullNameError'),
-                    email: document.getElementById('emailError'),
-                    password: document.getElementById('passwordError'),
-                    confirmPassword: document.getElementById('confirmPasswordError'),
-                    terms: document.getElementById('termsError')
-                };
-                this.submitBtn = document.getElementById('submitBtn');
-                this.strengthFill = document.getElementById('strengthFill');
-                this.strengthText = document.getElementById('strengthText');
-                this.emailSuccess = document.getElementById('emailSuccess');
-                this.confirmPasswordSuccess = document.getElementById('confirmPasswordSuccess');
-                this.errorAlert = document.getElementById('errorAlert');
-                this.successAlert = document.getElementById('successAlert');
+    <form class="auth-form" id="signupForm">
+      <div class="alert alert-error" id="errorAlert"></div>
+      <div class="alert alert-success" id="successAlert"></div>
 
-                this.init();
-            }
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input type="text" id="firstName" name="firstName" required class="form-input"/>
+      </div>
 
-            init() {
-                this.form.addEventListener('submit', this.handleSubmit.bind(this));
-                this.inputs.fullName.addEventListener('blur', this.validateFullName.bind(this));
-                this.inputs.email.addEventListener('blur', this.validateEmail.bind(this));
-                this.inputs.password.addEventListener('input', this.validatePassword.bind(this));
-                this.inputs.confirmPassword.addEventListener('input', this.validateConfirmPassword.bind(this));
-                this.inputs.terms.addEventListener('change', this.validateTerms.bind(this));
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input type="text" id="lastName" name="lastName" required class="form-input"/>
+      </div>
 
-                // Real-time validation
-                Object.keys(this.inputs).forEach(key => {
-                    this.inputs[key].addEventListener('input', () => {
-                        this.clearError(key);
-                        this.updateSubmitButton();
-                    });
-                });
-            }
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" id="email" name="email" required class="form-input"/>
+      </div>
 
-            validateFullName() {
-                const name = this.inputs.fullName.value.trim();
-                if (!name) {
-                    this.showError('fullName', 'Full name is required');
-                    return false;
-                }
-                if (name.length < 2) {
-                    this.showError('fullName', 'Name must be at least 2 characters');
-                    return false;
-                }
-                this.clearError('fullName');
-                return true;
-            }
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" id="password" name="password" required class="form-input"/>
+        <div class="strength-bar">
+          <div class="strength-fill" id="strengthFill"></div>
+        </div>
+        <div class="strength-text" id="strengthText"></div>
+      </div>
 
-            validateEmail() {
-                const email = this.inputs.email.value.trim();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                
-                if (!email) {
-                    this.showError('email', 'Email is required');
-                    return false;
-                }
-                if (!emailRegex.test(email)) {
-                    this.showError('email', 'Please enter a valid email address');
-                    return false;
-                }
-                
-                this.clearError('email');
-                this.emailSuccess.textContent = 'Email format is valid';
-                this.emailSuccess.classList.add('show');
-                return true;
-            }
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" id="confirmPassword" required class="form-input"/>
+        <div class="form-error" id="confirmPasswordError"></div>
+      </div>
 
-            validatePassword() {
-                const password = this.inputs.password.value;
-                const strength = this.calculatePasswordStrength(password);
-                
-                this.updatePasswordStrength(strength);
-                
-                if (!password) {
-                    this.showError('password', 'Password is required');
-                    return false;
-                }
-                if (password.length < 8) {
-                    this.showError('password', 'Password must be at least 8 characters');
-                    return false;
-                }
-                if (strength.score < 3) {
-                    this.showError('password', 'Password is too weak');
-                    return false;
-                }
-                
-                this.clearError('password');
-                this.validateConfirmPassword(); // Revalidate confirm password
-                return true;
-            }
+      <div class="form-group">
+        <label class="form-label">Age</label>
+        <input type="number" id="age" name="age" min="18" required class="form-input"/>
+      </div>
 
-            validateConfirmPassword() {
-                const password = this.inputs.password.value;
-                const confirmPassword = this.inputs.confirmPassword.value;
-                
-                if (!confirmPassword) {
-                    this.showError('confirmPassword', 'Please confirm your password');
-                    return false;
-                }
-                if (password !== confirmPassword) {
-                    this.showError('confirmPassword', 'Passwords do not match');
-                    return false;
-                }
-                
-                this.clearError('confirmPassword');
-                this.confirmPasswordSuccess.textContent = 'Passwords match';
-                this.confirmPasswordSuccess.classList.add('show');
-                return true;
-            }
+      <div class="form-group">
+        <label class="form-label">Gender</label>
+        <select id="gender" name="gender" required class="form-input">
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
 
-            validateTerms() {
-                if (!this.inputs.terms.checked) {
-                    this.showError('terms', 'You must agree to the terms and conditions');
-                    return false;
-                }
-                this.clearError('terms');
-                return true;
-            }
+      <div class="form-group full-width">
+        <label class="form-label">Photo URL (optional)</label>
+        <input type="url" id="photoUrl" name="photoUrl" placeholder="https://..." class="form-input"/>
+      </div>
 
-            calculatePasswordStrength(password) {
-                let score = 0;
-                let feedback = [];
+      <div class="role-selector">
+        <div class="role-option">
+         <input type="radio" id="student" name="role" value="student" class="role-input" />
+          <label for="student" class="role-label">Student</label>
+  </div>
+   <div class="role-option">
+     <input type="radio" id="instructor" name="role" value="instructor" class="role-input" />
+     <label for="instructor" class="role-label">Instructor</label>
+     </div>
+</div>
 
-                if (password.length >= 8) score++;
-                if (password.length >= 12) score++;
-                if (/[a-z]/.test(password)) score++;
-                if (/[A-Z]/.test(password)) score++;
-                if (/[0-9]/.test(password)) score++;
-                if (/[^A-Za-z0-9]/.test(password)) score++;
+      <div class="form-group full-width">
+        <input type="checkbox" id="terms" required />
+        <label for="terms">I agree to the <a href="#">terms</a> and <a href="#">privacy</a></label>
+      </div>
 
-                if (password.length < 8) feedback.push('at least 8 characters');
-                if (!/[a-z]/.test(password)) feedback.push('lowercase letter');
-                if (!/[A-Z]/.test(password)) feedback.push('uppercase letter');
-                if (!/[0-9]/.test(password)) feedback.push('number');
-                if (!/[^A-Za-z0-9]/.test(password)) feedback.push('special character');
+      <div class="form-group full-width">
+        <button type="submit" id="submitBtn" class="btn btn-primary">Sign Up</button>
+      </div>
+    </form>
 
-                return { score, feedback };
-            }
+    <div class="auth-footer">
+      <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+  </div>
 
-            updatePasswordStrength(strength) {
-                const { score, feedback } = strength;
-                const percentage = (score / 6) * 100;
-                
-                this.strengthFill.style.width = percentage + '%';
-                
-                if (score <= 2) {
-                    this.strengthFill.className = 'strength-fill strength-weak';
-                    this.strengthText.textContent = 'Weak password';
-                } else if (score <= 4) {
-                    this.strengthFill.className = 'strength-fill strength-medium';
-                    this.strengthText.textContent = 'Medium strength';
-                } else {
-                    this.strengthFill.className = 'strength-fill strength-strong';
-                    this.strengthText.textContent = 'Strong password';
-                }
-
-                if (feedback.length > 0) {
-                    this.strengthText.textContent += ` (Add: ${feedback.join(', ')})`;
-                }
-            }
-
-            showError(field, message) {
-                this.inputs[field].classList.add('error');
-                this.errors[field].textContent = message;
-                this.errors[field].classList.add('show');
-                
-                // Hide success message if shown
-                if (field === 'email') {
-                    this.emailSuccess.classList.remove('show');
-                }
-                if (field === 'confirmPassword') {
-                    this.confirmPasswordSuccess.classList.remove('show');
-                }
-            }
-
-            clearError(field) {
-                this.inputs[field].classList.remove('error');
-                this.errors[field].classList.remove('show');
-                this.inputs[field].classList.add('success');
-            }
-
-            updateSubmitButton() {
-                const isValid = this.validateAllFields();
-                this.submitBtn.disabled = !isValid;
-            }
-
-            validateAllFields() {
-                return this.validateFullName() && 
-                       this.validateEmail() && 
-                       this.validatePassword() && 
-                       this.validateConfirmPassword() && 
-                       this.validateTerms();
-            }
-
-            showAlert(type, message) {
-                const alert = type === 'success' ? this.successAlert : this.errorAlert;
-                alert.textContent = message;
-                alert.classList.add('show');
-                
-                setTimeout(() => {
-                    alert.classList.remove('show');
-                }, 5000);
-            }
-
-            async handleSubmit(e) {
-                e.preventDefault();
-                
-                if (!this.validateAllFields()) {
-                    this.showAlert('error', 'Please fix the errors above');
-                    return;
-                }
-
-                this.submitBtn.classList.add('btn-loading');
-                this.submitBtn.disabled = true;
-
-                try {
-                    // Simulate API call
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    
-                    const formData = new FormData(this.form);
-                    const userData = Object.fromEntries(formData);
-                    
-                    // In a real app, you would send this to your backend
-                    console.log('User registration data:', userData);
-                    
-                    this.showAlert('success', 'Account created successfully! Redirecting to login...');
-                    
-                    // Redirect to login page after success
-                    setTimeout(() => {
-                        window.location.href = 'login.html';
-                    }, 2000);
-                    
-                } catch (error) {
-                    this.showAlert('error', 'Registration failed. Please try again.');
-                    console.error('Registration error:', error);
-                } finally {
-                    this.submitBtn.classList.remove('btn-loading');
-                    this.submitBtn.disabled = false;
-                }
-            }
-        }
-
-        // Initialize the form when DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            new SignupForm();
-        });
-    </script>
+ <script src="../js/signup.js"></script>
 </body>
 </html>
