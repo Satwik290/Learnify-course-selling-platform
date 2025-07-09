@@ -106,3 +106,12 @@
     .alert.show {
       display: block;
     }
+
+  .back-to-home {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
