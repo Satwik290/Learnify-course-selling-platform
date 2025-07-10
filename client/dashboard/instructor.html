@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Instructor Dashboard | Learnify</title>
+  <link rel="stylesheet" href="./styles/dash.css" />
+</head>
+<body>
+  <header class="dashboard-header">
+    <h1>Welcome Instructor 👨‍🏫</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="profile-box">
+      <h2>Your Profile</h2>
+      <p><strong>Name:</strong> <span id="name">Loading...</span></p>
+      <p><strong>Email:</strong> <span id="email">Loading...</span></p>
+    </section>
+
+    <section class="courses-section">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Your Created Courses</h2>
+        <a href="create-course.html" class="btn-create">+ Create Course</a>
+      </div>
+      <div id="coursesContainer" class="courses-list">
+        <!-- Instructor's courses go here -->
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/instructor.js"></script>
+</body>
+</html>

@@ -12,7 +12,7 @@ exports.signupSchema = z.object({
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email format"),
   password: passwordRules,
-  age: z.number().min(18, "Minimum age is 18").optional(),
+  age: z.coerce.number().min(18, "Minimum age is 18").optional(),
   gender: z.enum(["male", "female", "other"]).optional(),
   photoUrl: z.string().url("Invalid photo URL").optional(),
   about: z.string().optional(),

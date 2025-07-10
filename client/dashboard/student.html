@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard | Learnify</title>
+  <link rel="stylesheet" href="./styles/dash.css" />
+</head>
+<body>
+  <header class="dashboard-header">
+    <h1>Welcome to Learnify 🎓</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="profile-box">
+      <h2>Your Profile</h2>
+      <p><strong>Name:</strong> <span id="name">Loading...</span></p>
+      <p><strong>Email:</strong> <span id="email">Loading...</span></p>
+    </section>
+
+    <section class="courses-section">
+      <h2>Enrolled Courses</h2>
+      <div id="coursesContainer" class="courses-list">
+        <!-- Course cards will appear here -->
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/student.js"></script>
+</body>
+</html>
