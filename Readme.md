@@ -130,5 +130,5 @@ If you find a bug or have an idea, feel free to [open an issue](https://github.c
 MIT License © 2025 \[Your Name or GitHub Handle]
 
 ---
-
+.....
 > Built with ❤️ by a passionate learner & open-source enthusiast.
