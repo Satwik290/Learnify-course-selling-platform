@@ -1,53 +1,68 @@
 const Enrollment = require("../model/Enrollment");
+const Course = require("../model/Course");
+const asyncHandler = require("../utils/asyncHandler");
+const ApiError = require("../utils/ApiError");
 
-// Enroll in course
-exports.enrollInCourse = async (req, res) => {
-  try {
-    const existing = await Enrollment.findOne({
-      user: req.user._id,
-      course: req.params.courseId,
-    });
+exports.enrollInCourse = asyncHandler(async (req, res) => {
+  const existing = await Enrollment.findOne({
+    user: req.user?._id,
+    course: req.params.courseId,
+  });
 
-    if (existing) {
-      return res.status(400).json({ error: "Already enrolled in this course" });
-    }
-
-    const enrollment = await Enrollment.create({
-      user: req.user._id,
-      course: req.params.courseId,
-    });
-
-    res.status(201).json({ message: "Enrolled successfully", enrollment });
-  } catch (err) {
-    res.status(500).json({ error: "Enrollment failed" });
+  if (existing) {
+    throw new ApiError(400, "Already enrolled in this course");
   }
-};
 
-// View enrolled courses
-exports.getMyEnrollments = async (req, res) => {
-  try {
-    const enrollments = await Enrollment.find({ user: req.user._id }).populate("course");
-    const courses = enrollments.map((e) => e.course);
-    res.status(200).json({ enrolledCourses: courses });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch enrolled courses" });
+  const enrollment = await Enrollment.create({
+    user: req.user?._id,
+    course: req.params.courseId,
+  });
+
+  if (!enrollment) {
+    throw new ApiError(500, "Failed to enroll in the course");
   }
-};
 
-// Unenroll from course
-exports.unenrollCourse = async (req, res) => {
-  try {
-    const removed = await Enrollment.findOneAndDelete({
-      user: req.user._id,
-      course: req.params.courseId,
-    });
+  // ✅ Sync cached enrollment count
+  await Course.syncEnrollmentCount(req.params.courseId);
 
-    if (!removed) {
-      return res.status(404).json({ error: "You are not enrolled in this course" });
-    }
+  return res.status(201).json({
+    success: true,
+    message: "Enrolled successfully",
+    enrollment,
+  });
+});
 
-    res.status(200).json({ message: "Unenrolled successfully" });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to unenroll" });
+exports.getMyEnrollments = asyncHandler(async (req, res) => {
+  const enrollments = await Enrollment.find({ user: req.user?._id }).populate("course");
+  
+  if (!enrollments) {
+    throw new ApiError(404, "No enrollments found");
   }
-};
+
+  const courses = enrollments.map((e) => e.course);
+
+  return res.status(200).json({
+    success: true,
+    message: "Enrollments fetched successfully",
+    enrolledCourses: courses,
+  });
+});
+
+exports.unenrollCourse = asyncHandler(async (req, res) => {
+  const removed = await Enrollment.findOneAndDelete({
+    user: req.user?._id,
+    course: req.params.courseId,
+  });
+
+  if (!removed) {
+    throw new ApiError(404, "You are not enrolled in this course");
+  }
+
+  // ✅ Sync cached enrollment count
+  await Course.syncEnrollmentCount(req.params.courseId);
+
+  return res.status(200).json({
+    success: true,
+    message: "Unenrolled successfully",
+  });
+});

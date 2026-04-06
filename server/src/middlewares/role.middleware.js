@@ -1,10 +1,15 @@
+const ApiError = require("../utils/ApiError");
+
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({
-        error: "Access denied: You don't have permission to perform this action.",
-      });
+    if (!req.user) {
+      throw new ApiError(401, "Authentication required");
     }
+
+    if (!roles.includes(req.user.role)) {
+      throw new ApiError(403, `Access denied: ${req.user.role} role is not authorized`);
+    }
+
     next();
   };
 };

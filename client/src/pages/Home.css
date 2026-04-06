@@ -1,0 +1,35 @@
+.home-page {
+  background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+}
+
+.hero h1 {
+  background: linear-gradient(to right, #ffffff, #94a3b8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.feature-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.2);
+}
+
+.icon-box {
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .icon-box {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.stat-value {
+  background: linear-gradient(to bottom, #ffffff, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

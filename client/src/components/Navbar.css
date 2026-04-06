@@ -1,0 +1,45 @@
+.navbar {
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.navbar .logo {
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.navbar .nav-links a {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.navbar .nav-links a:hover,
+.navbar .nav-links a.active {
+  color: var(--primary);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  color: var(--primary);
+  padding: 0.625rem 1.25rem;
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background: rgba(99, 102, 241, 0.1);
+}

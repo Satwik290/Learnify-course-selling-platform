@@ -10,6 +10,7 @@ const courseRoutes = require("./routes/course.routes");
 const enrollmentRoutes = require("./routes/enroll.routes");
 const adminRoutes = require("./routes/admin.routes");
 const paymentRoutes = require("./routes/payment.routes");
+const progressRoutes = require("./routes/progress.routes");
 
 
 const app = express();
@@ -19,8 +20,15 @@ app.use(express.json());
 
 // 🌐 Middlewares
 app.use(cors({
-  origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
-  credentials: true
+  origin: [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
  // Use your frontend URL here
 app.use(express.json());
@@ -40,7 +48,11 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/enroll", enrollmentRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/payment", paymentRoutes);
+app.use("/api/progress", progressRoutes);
 
+// 🚨 Global Error Handler
+const errorHandler = require("./middlewares/errorHandler");
+app.use(errorHandler);
 
 // 🔍 Test route
 app.get("/", (req, res) => {
