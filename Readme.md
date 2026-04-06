@@ -85,4 +85,67 @@ Feel free to explore the platform using these pre-seeded demo accounts:
 
 ---
 
+<<<<<<< HEAD
 <p align="center">Built with ❤️ for a state-of-the-art learning experience.</p>
+=======
+## 🎨 Sample Diagram
+
+![Learnify Backend Architecture](./server/src/Assets/learnify-server.svg)
+
+---
+
+## 🧪 API Testing
+
+Test using **Postman** or **Thunder Client**:
+
+* 🔐 Protected routes require login
+* 📸 Upload course image with `multipart/form-data`
+* 🧾 Check response for `JWT cookie` auth
+
+---
+
+## ⚙️ Setup & Installation
+
+```bash
+# 📥 Clone the repository
+$ git clone https://github.com/your-username/learnify-server.git
+
+# 📦 Install dependencies
+$ cd learnify-server && npm install
+
+# 🧬 Setup environment variables
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+
+# 🚀 Start the server
+$ npm run start
+```
+
+---
+
+## 🔮 What's Next (Part 2)
+
+* 💳 Mock payment + confirmation screen
+* 📊 Dashboard UI with stats
+* 🧑‍🏫 Instructor controls
+* 👮 RBAC (Admin, Student, Instructor)
+* 💻 Frontend with **EJS / React**
+
+---
+
+## 🤝 Contributing
+
+Pull requests welcome 🙌
+If you find a bug or have an idea, feel free to [open an issue](https://github.com/your-username/learnify-server/issues).
+
+---
+
+## 📄 License
+
+MIT License © 2025 \[Your Name or GitHub Handle]
+
+---
+.....
+> Built with ❤️ by a passionate learner & open-source enthusiast.
+>>>>>>> d7d966652841c9082ee5477e4f4810ab6af331d1
