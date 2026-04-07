@@ -18,16 +18,24 @@ exports.signup = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create(validation.data);
+  const token = user.generateJWT();
 
-  if (!user) {
-    throw new ApiError(500, "Something went wrong while registering the user");
-  }
+  const options = {
+    httpOnly: true,
+    secure: true, // Force secure for cross-site cookies
+    sameSite: "none", // Required for cross-domain (github.io to onrender.com)
+    maxAge: 8 * 60 * 60 * 1000,
+  };
 
-  return res.status(201).json({
-    success: true,
-    message: "User registered successfully",
-    user
-  });
+  return res
+    .status(201)
+    .cookie("token", token, options)
+    .json({
+      success: true,
+      message: "User registered successfully",
+      user,
+      token
+    });
 });
 
 exports.login = asyncHandler(async (req, res) => {
@@ -54,8 +62,8 @@ exports.login = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Lax",
+    secure: true, // Force secure for cross-site cookies
+    sameSite: "none", // Required for cross-domain (github.io to onrender.com)
     maxAge: 8 * 60 * 60 * 1000,
   };
 
@@ -73,7 +81,8 @@ exports.login = asyncHandler(async (req, res) => {
 exports.logout = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
+    sameSite: "none",
   };
 
   return res
