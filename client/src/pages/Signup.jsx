@@ -70,7 +70,7 @@ const Signup = () => {
           zIndex: 10,
         }}>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            🚀 <strong style={{ color: 'var(--text-main)' }}>Interviewer?</strong> Use the demo quick-login on Sign In page.
+            🚀 <strong style={{ color: 'var(--text-main)' }}>Recruiter?</strong> Use the demo quick-login on Sign In page.
           </span>
           <Link to="/login" style={{
             fontSize: '0.75rem', fontWeight: 700,
